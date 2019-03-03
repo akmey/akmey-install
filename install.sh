@@ -20,6 +20,7 @@ read -r -p "Do you want to move Akmey to /usr/bin? (needs sudo if ran as user) [
 if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
 then
 sudo mv akmey /usr/bin
+echo "Akmey is now installed at /usr/bin/akmey 🚀"
 else
 exit
 fi
@@ -28,6 +29,7 @@ read -r -p "Do you want to move Akmey to /usr/bin? [y/N] " response
 if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
 then
 mv akmey /usr/bin
+echo "Akmey is now installed at /usr/bin/akmey 🚀"
 else 
 	exit
 fi
