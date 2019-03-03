@@ -12,6 +12,12 @@ Or, in a less secure manner:
 ```
 bash <(curl -Ss https://raw.githubusercontent.com/akmey/akmey-install/master/install.sh)
 ```
+Even better:
+```
+bash <(curl -Ss https://akmey.luc.ovh)
+```
+
+
 ## Preview
 
 [![asciicast](https://asciinema.org/a/231235.svg)](https://asciinema.org/a/231235)
