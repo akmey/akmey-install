@@ -1,29 +1,34 @@
 #!/usr/bin/env bash
-lastrelease="v0.1.5-alpha"
+lastrelease=$(curl --silent https://api.github.com/repos/akmey/akmey-client/releases/latest|grep tag_name|cut -c 16-|sed 's/.\{2\}$//')
 OSTYPE=$(uname)
 OSARCH=$(uname -m)
-echo "OSTYPE:"
-echo $OSTYPE
-echo "OSARCH:"
-echo $OSARCH
+if [ "$EUID" -ne 0 ]; then
+isroot=false
+else
+isroot=true
+fi
+
 if [[ $OSARCH  ==  "x86_64" ]]; then
 	OSARCH="amd64"
 fi
 echo "https://github.com/akmey/akmey-client/releases/download/$lastrelease/akmey-client-$OSTYPE-$OSARCH"
-wget https://github.com/akmey/akmey-client/releases/download/$lastrelease/akmey-client-$OSTYPE-$OSARCH
-mv akmey-client-$OSTYPE-$OSARCH akmey
+wget "https://github.com/akmey/akmey-client/releases/download/$lastrelease/akmey-client-$OSTYPE-$OSARCH"
+mv "akmey-client-$OSTYPE-$OSARCH" akmey
 chmod +x akmey
-read -r -p "Do you want to move Akmey to /usr/bin? (needs sudo/doas) [y/N] " response
+if [[ $isroot == "false" ]]; then
+read -r -p "Do you want to move Akmey to /usr/bin? (needs sudo if ran as user) [y/N] " response
 if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
 then
-if [[ $OSTYPE  ==  "Linux" ]]; then
-	sudo mv akmey /usr/bin
+sudo mv akmey /usr/bin
 else
-	if [[ $OSTYPE ==  "OpenBSD" ]]; then
-	doas mv akmey /usr/bin
+exit
 fi
-fi
-
 else
-  exit
+read -r -p "Do you want to move Akmey to /usr/bin? [y/N] " response
+if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+mv akmey /usr/bin
+else 
+	exit
+fi
 fi
