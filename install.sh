@@ -11,6 +11,10 @@ fi
 if [[ $OSARCH  ==  "x86_64" ]]; then
 	OSARCH="amd64"
 fi
+if [[ $OSTYPE == "Darwin" ]]; then
+	OSTYPE="darwin-10.6"
+fi
+
 echo "https://github.com/akmey/akmey-client/releases/download/$lastrelease/akmey-client-$OSTYPE-$OSARCH"
 curl -L -o akmey  "https://github.com/akmey/akmey-client/releases/download/$lastrelease/akmey-client-$OSTYPE-$OSARCH"
 chmod +x akmey
